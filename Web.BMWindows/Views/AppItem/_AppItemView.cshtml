@@ -1,0 +1,78 @@
+﻿<div class="modal fade" id="app-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm/Sửa Ứng dụng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tên ứng dụng <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" placeholder="Nhập tên ứng dụng">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nhóm ứng dụng <span class="text-danger">*</span></label>
+                            <select class="form-select">
+                                <option>Chọn nhóm...</option>
+                                <option>Nhân sự</option>
+                                <option>Xây dựng</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Domain web <span class="text-danger">*</span></label>
+                        <input type="url" class="form-control" placeholder="https://example.com">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Secret Key <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="secretKey" placeholder="Nhập secret key">
+                                <button class="btn btn-outline-secondary" type="button" onclick="toggleSecret()">
+                                    <i class="fa-solid fa-eye" id="toggleIcon"></i>
+                                </button>
+                                <button class="btn btn-outline-primary" type="button" onclick="generateSecret()">
+                                    <i class="fa-solid fa-refresh"></i> Tạo mới
+                                </button>
+                            </div>
+                            <small class="text-muted">Secret key dùng để xác thực API</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Thời hạn Access Token (phút) <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" placeholder="60" value="60" min="1">
+                            <small class="text-muted">Thời gian token hết hiệu lực</small>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ngày hết hạn ứng dụng <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control">
+                            <small class="text-muted">Ngày ứng dụng ngừng hoạt động</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Thứ tự sắp xếp</label>
+                            <input type="number" class="form-control" placeholder="0" value="0">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select">
+                            <option value="active" selected>Hoạt động</option>
+                            <option value="inactive">Tạm dừng</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

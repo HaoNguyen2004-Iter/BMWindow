@@ -1,0 +1,224 @@
+﻿ <!-- Wrapper chính -->
+<div class="wrapper">
+	<!-- Sidebar Navigation -->
+	<nav class="sidebar" id="sidebar">
+		<div class="sidebar-header">
+			<div class="logo-wrapper">
+				<i class="fa-solid fa-cubes-stacked"></i>
+				<span class="logo-text">BMWindow</span>
+			</div>
+			<button class="sidebar-toggle" id="sidebarToggle">
+				<i class="fa-solid fa-bars"></i>
+			</button>
+		</div>
+		<ul class="nav flex-column sidebar-nav">
+			<!-- Dashboard -->
+			<li class="nav-item">
+				<a class="nav-link active" href="#" data-target="dashboard">
+					<i class="nav-icon fa-solid fa-gauge-high"></i>
+					<span class="nav-text">Dashboard</span>
+				</a>
+			</li>
+			<!-- Ứng dụng -->
+			<li class="nav-item">
+				<a class="nav-link has-submenu" data-bs-toggle="collapse" href="#menu-ungdung" role="button">
+					<i class="nav-icon fa-solid fa-shapes"></i>
+					<span class="nav-text">Ứng dụng</span>
+					<i class="nav-arrow fa-solid fa-chevron-down"></i>
+				</a>
+				<div class="collapse submenu" id="menu-ungdung">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a href="#" class="nav-link" data-target="category-management">
+								<span class="submenu-dot"></span>
+								Nhóm ứng dụng
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link" data-target="app-management">
+								<span class="submenu-dot"></span>
+								Danh sách ứng dụng
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+
+			<!-- Chức năng -->
+			<li class="nav-item">
+				<a class="nav-link has-submenu" data-bs-toggle="collapse" href="#menu-chucnang" role="button">
+					<i class="nav-icon fa-solid fa-bolt"></i>
+					<span class="nav-text">Chức năng</span>
+					<i class="nav-arrow fa-solid fa-chevron-down"></i>
+				</a>
+				<div class="collapse submenu" id="menu-chucnang">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a href="#" class="nav-link" data-target="feature-1">
+								<span class="submenu-dot"></span>
+								Tính năng 1
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link" data-target="feature-2">
+								<span class="submenu-dot"></span>
+								Tính năng 2
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+
+			<!-- Người dùng -->
+			<li class="nav-item">
+				<a class="nav-link" href="#" data-target="user-management">
+					<i class="nav-icon fa-solid fa-users"></i>
+					<span class="nav-text">Người dùng</span>
+				</a>
+			</li>
+
+			<!-- Cài đặt -->
+			<li class="nav-item">
+				<a class="nav-link" href="#" data-target="settings">
+					<i class="nav-icon fa-solid fa-gear"></i>
+					<span class="nav-text">Cài đặt</span>
+				</a>
+			</li>
+		</ul>
+
+		<!-- User Info ở dưới sidebar -->
+		<div class="sidebar-footer">
+			<div class="user-info">
+				<div class="user-avatar">
+					<i class="fa-solid fa-user"></i>
+				</div>
+				<div class="user-details">
+					<div class="user-name">Administrator</div>
+					<div class="user-role"> Admin</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Main Content Area -->
+	<div class="main-content" id="mainContent">
+
+		<!-- Topbar -->
+		<header class="topbar">
+			<div class="topbar-left">
+				<button class="mobile-toggle" id="mobileToggle">
+					<i class="fa-solid fa-bars"></i>
+				</button>
+				<div class="breadcrumb-wrapper">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb" id="breadcrumb">
+							<li class="breadcrumb-item active">Dashboard</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+			<div class="topbar-right">
+				<button class="topbar-btn" id="notificationBtn">
+					<i class="fa-solid fa-bell"></i>
+					<span class="badge-notification">3</span>
+				</button>
+				<button class="topbar-btn" id="themeToggle" title="Toggle Dark Mode">
+					<i class="fa-solid fa-moon"></i>
+				</button>
+			</div>
+		</header>
+
+		<!-- Content Container -->
+		<div class="content-wrapper">
+
+			<!-- Dashboard Section -->
+			<section id="dashboard" class="content-section active">
+			</section>
+			<!-- Category Management Section -->
+			<section id="category-management" class="content-section">
+			</section>
+
+			<!-- User Management Section -->
+			<section id="user-management" class="content-section">
+				<div class="page-header">
+					<div>
+						<h1 class="page-title">Quản lý Người dùng</h1>
+						<p class="page-description">Danh sách người dùng hệ thống</p>
+					</div>
+					<button class="btn btn-primary">
+						<i class="fa-solid fa-user-plus"></i> Thêm người dùng
+					</button>
+				</div>
+
+				<div class="card">
+					<div class="card-body text-center py-5">
+						<i class="fa-solid fa-users fa-3x text-muted mb-3"></i>
+						<p class="text-muted">Chức năng đang phát triển</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Settings Section -->
+			<section id="settings" class="content-section">
+				<div class="page-header">
+					<div>
+						<h1 class="page-title">Cài đặt</h1>
+						<p class="page-description">Cấu hình hệ thống</p>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-body text-center py-5">
+						<i class="fa-solid fa-gear fa-3x text-muted mb-3"></i>
+						<p class="text-muted">Chức năng đang phát triển</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Feature 1 Section -->
+			<section id="feature-1" class="content-section">
+				<div class="page-header">
+					<h1 class="page-title">Tính năng 1</h1>
+				</div>
+				<div class="card">
+					<div class="card-body text-center py-5">
+						<i class="fa-solid fa-bolt fa-3x text-muted mb-3"></i>
+						<p class="text-muted">Nội dung tính năng 1</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Feature 2 Section -->
+			<section id="feature-2" class="content-section">
+				<div class="page-header">
+					<h1 class="page-title">Tính năng 2</h1>
+				</div>
+				<div class="card">
+					<div class="card-body text-center py-5">
+						<i class="fa-solid fa-bolt fa-3x text-muted mb-3"></i>
+						<p class="text-muted">Nội dung tính năng 2</p>
+					</div>
+				</div>
+			</section>
+
+
+			<div id="global-modal" class="modal fade" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog" id="global-modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="global-modal-title"></h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+						</div>
+						<div class="modal-body" id="global-modal-body">
+							<!-- Nội dung partial sẽ được nạp vào đây -->
+						</div>
+						<div class="modal-footer d-none" id="global-modal-footer">
+							<!-- Nếu partial có footer riêng có thể dựng động -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

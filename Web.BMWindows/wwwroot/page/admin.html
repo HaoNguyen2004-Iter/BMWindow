@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin BMWindow - Dashboard</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+    <!-- Wrapper chính -->
+    <div class="wrapper">
+        
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrapper">
+                    <i class="fa-solid fa-cubes-stacked"></i>
+                    <span class="logo-text">BMWindow</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            
+            <ul class="nav flex-column sidebar-nav">
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" data-target="dashboard">
+                        <i class="nav-icon fa-solid fa-gauge-high"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- Ứng dụng -->
+                <li class="nav-item">
+                    <a class="nav-link has-submenu" data-bs-toggle="collapse" href="#menu-ungdung" role="button">
+                        <i class="nav-icon fa-solid fa-shapes"></i>
+                        <span class="nav-text">Ứng dụng</span>
+                        <i class="nav-arrow fa-solid fa-chevron-down"></i>
+                    </a>
+                    <div class="collapse submenu" id="menu-ungdung">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-target="category-management">
+                                    <span class="submenu-dot"></span>
+                                    Nhóm ứng dụng
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-target="app-management">
+                                    <span class="submenu-dot"></span>
+                                    Danh sách ứng dụng
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Chức năng -->
+                <li class="nav-item">
+                    <a class="nav-link has-submenu" data-bs-toggle="collapse" href="#menu-chucnang" role="button">
+                        <i class="nav-icon fa-solid fa-bolt"></i>
+                        <span class="nav-text">Chức năng</span>
+                        <i class="nav-arrow fa-solid fa-chevron-down"></i>
+                    </a>
+                    <div class="collapse submenu" id="menu-chucnang">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-target="feature-1">
+                                    <span class="submenu-dot"></span>
+                                    Tính năng 1
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-target="feature-2">
+                                    <span class="submenu-dot"></span>
+                                    Tính năng 2
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                
+                <!-- Người dùng -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-target="user-management">
+                        <i class="nav-icon fa-solid fa-users"></i>
+                        <span class="nav-text">Người dùng</span>
+                    </a>
+                </li>
+
+                <!-- Cài đặt -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-target="settings">
+                        <i class="nav-icon fa-solid fa-gear"></i>
+                        <span class="nav-text">Cài đặt</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- User Info ở dưới sidebar -->
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <div class="user-name">Administrator</div>
+                        <div class="user-role"> Admin</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content" id="mainContent">
+            
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-toggle" id="mobileToggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="breadcrumb-wrapper">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb" id="breadcrumb">
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="topbar-btn" id="notificationBtn">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge-notification">3</span>
+                    </button>
+                    <button class="topbar-btn" id="themeToggle" title="Toggle Dark Mode">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Container -->
+            <div class="content-wrapper">
+
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="content-section active">
+                  
+                </section>
+
+                <!-- App Management Section -->
+                <section id="app-management" class="content-section">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Quản lý Ứng dụng</h1>
+                            <p class="page-description">Danh sách tất cả ứng dụng trong hệ thống</p>
+                        </div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#app-modal">
+                            <i class="fa-solid fa-plus"></i> Tạo ứng dụng
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle data-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="50">STT</th>
+                                            <th>Tên ứng dụng</th>
+                                            <th>Nhóm ứng dụng</th>
+                                            <th>Domain web</th>
+                                            <th>Secret Key</th>
+                                            <th width="120">Thời hạn token (phút)</th>
+                                            <th width="120">Ngày hết hạn</th>
+                                            <th>Trạng thái</th>
+                                            <th width="100">TT sắp xếp</th>
+                                            <th>Người tạo</th>
+                                            <th>Ngày tạo</th>
+                                            <th>Người sửa</th>
+                                            <th>Ngày sửa</th>
+                                            <th width="120" class="text-end">Hành động</th>
+                                        </tr>
+                                        <tr class="filter-row">
+                                            <td></td>
+                                            <td><input type="text" class="form-control form-control-sm" placeholder="Tìm kiếm..."></td>
+                                            <td>
+                                                <select class="form-select form-select-sm">
+                                                    <option>Tất cả</option>
+                                                    <option>Nhân sự</option>
+                                                    <option>Xây dựng</option>
+                                                </select>
+                                            </td>
+                                            <td><input type="text" class="form-control form-control-sm" placeholder="Domain..."></td>
+                                            <td><input type="text" class="form-control form-control-sm" placeholder="Secret..."></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <select class="form-select form-select-sm">
+                                                    <option>Tất cả</option>
+                                                    <option>Hoạt động</option>
+                                                    <option>Tạm dừng</option>
+                                                </select>
+                                            </td>
+                                            <td colspan="6"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><strong>PORTAL</strong></td>
+                                            <td>Tất cả</td>
+                                            <td><a href="https://portal.lassvn.net" target="_blank">https://portal.lassvn.net</a></td>
+                                            <td><code class="text-muted">abc123***</code></td>
+                                            <td class="text-center">60</td>
+                                            <td>31/12/2025</td>
+                                            <td><span class="badge bg-success">Hoạt động</span></td>
+                                            <td>1</td>
+                                            <td>Administrator</td>
+                                            <td>01/11/2021</td>
+                                            <td>Administrator</td>
+                                            <td>10/11/2025</td>
+                                            <td class="text-end">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#app-modal" title="Chỉnh sửa">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger" title="Xóa">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td><strong>HRIS</strong></td>
+                                            <td>Nhân sự</td>
+                                            <td><a href="http://localhost:50087" target="_blank">http://localhost:50087</a></td>
+                                            <td><code class="text-muted">xyz789***</code></td>
+                                            <td class="text-center">30</td>
+                                            <td>15/06/2026</td>
+                                            <td><span class="badge bg-success">Hoạt động</span></td>
+                                            <td>0</td>
+                                            <td>Administrator</td>
+                                            <td>02/11/2021</td>
+                                            <td>Administrator</td>
+                                            <td>09/11/2025</td>
+                                            <td class="text-end">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#app-modal" title="Chỉnh sửa">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger" title="Xóa">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Category Management Section -->
+                <section id="category-management" class="content-section">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Quản lý Nhóm ứng dụng</h1>
+                            <p class="page-description">Quản lý các nhóm phân loại ứng dụng</p>
+                        </div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#category-modal">
+                            <i class="fa-solid fa-plus"></i> Tạo nhóm mới
+                        </button>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle data-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="50">STT</th>
+                                            <th>Tên nhóm</th>
+                                            <th width="100">Ưu tiên</th>
+                                            <th width="100">Mặc định</th>
+                                            <th>Người tạo</th>
+                                            <th>Ngày tạo</th>
+                                            <th>Người sửa</th>
+                                            <th>Ngày sửa</th>
+                                            <th width="120" class="text-end">Hành động</th>
+                                        </tr>
+                                        <tr class="filter-row">
+                                            <td></td>
+                                            <td><input type="text" class="form-control form-control-sm" placeholder="Tìm kiếm..."></td>
+                                            <td></td>
+                                    
+                                            <td colspan="5"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><strong>Nhân sự</strong></td>
+                                            <td>1</td>
+                                            <td></td>
+                                            <td>Administrator</td>
+                                            <td>04/11/2021</td>
+                                            <td>Administrator</td>
+                                            <td>01/08/2023</td>
+                                            <td class="text-end">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#category-modal" title="Chỉnh sửa">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger" title="Xóa">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td><strong>Xây dựng</strong></td>
+                                            <td>2</td>
+                                            <td></td>
+                                            <td>Administrator</td>
+                                            <td>04/11/2021</td>
+                                            <td>Administrator</td>
+                                            <td>20/05/2023</td>
+                                            <td class="text-end">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#category-modal" title="Chỉnh sửa">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger" title="Xóa">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- User Management Section -->
+                <section id="user-management" class="content-section">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Quản lý Người dùng</h1>
+                            <p class="page-description">Danh sách người dùng hệ thống</p>
+                        </div>
+                        <button class="btn btn-primary">
+                            <i class="fa-solid fa-user-plus"></i> Thêm người dùng
+                        </button>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body text-center py-5">
+                            <i class="fa-solid fa-users fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Chức năng đang phát triển</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings" class="content-section">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Cài đặt</h1>
+                            <p class="page-description">Cấu hình hệ thống</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body text-center py-5">
+                            <i class="fa-solid fa-gear fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Chức năng đang phát triển</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Feature 1 Section -->
+                <section id="feature-1" class="content-section">
+                    <div class="page-header">
+                        <h1 class="page-title">Tính năng 1</h1>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center py-5">
+                            <i class="fa-solid fa-bolt fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Nội dung tính năng 1</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Feature 2 Section -->
+                <section id="feature-2" class="content-section">
+                    <div class="page-header">
+                        <h1 class="page-title">Tính năng 2</h1>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center py-5">
+                            <i class="fa-solid fa-bolt fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">Nội dung tính năng 2</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="app-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm/Sửa Ứng dụng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tên ứng dụng <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" placeholder="Nhập tên ứng dụng">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nhóm ứng dụng <span class="text-danger">*</span></label>
+                                <select class="form-select">
+                                    <option>Chọn nhóm...</option>
+                                    <option>Nhân sự</option>
+                                    <option>Xây dựng</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Domain web <span class="text-danger">*</span></label>
+                            <input type="url" class="form-control" placeholder="https://example.com">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Secret Key <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="secretKey" placeholder="Nhập secret key">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="toggleSecret()">
+                                        <i class="fa-solid fa-eye" id="toggleIcon"></i>
+                                    </button>
+                                    <button class="btn btn-outline-primary" type="button" onclick="generateSecret()">
+                                        <i class="fa-solid fa-refresh"></i> Tạo mới
+                                    </button>
+                                </div>
+                                <small class="text-muted">Secret key dùng để xác thực API</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Thời hạn Access Token (phút) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" placeholder="60" value="60" min="1">
+                                <small class="text-muted">Thời gian token hết hiệu lực</small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ngày hết hạn ứng dụng <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control">
+                                <small class="text-muted">Ngày ứng dụng ngừng hoạt động</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Thứ tự sắp xếp</label>
+                                <input type="number" class="form-control" placeholder="0" value="0">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Trạng thái</label>
+                            <select class="form-select">
+                                <option value="active" selected>Hoạt động</option>
+                                <option value="inactive">Tạm dừng</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="category-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm/Sửa Nhóm ứng dụng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Tên nhóm</label>
+                            <input type="text" class="form-control" placeholder="Nhập tên nhóm">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Thứ tự ưu tiên</label>
+                            <input type="number" class="form-control" value="0">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="defaultCheck">
+                                <label class="form-check-label" for="defaultCheck">
+                                    Đặt làm mặc định
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Modular app scripts -->
+    <script src="/assets/js/app/common/ajax.js"></script>
+    <script src="/assets/js/app/common/modal.js"></script>
+    <script src="/assets/js/app/categories/list.js"></script>
+    <script src="/assets/js/app/appitems/grid.js"></script>
+
+
+</body>
+</html>
