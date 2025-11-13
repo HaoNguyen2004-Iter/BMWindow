@@ -1,6 +1,3 @@
-// ================= GLOBAL MODAL LOADER (moved from assets/js/global-modal.js) =================
-
-// Mở modal dùng global host khi click nút có class .modal-trigger
 console.debug('[modal.js] initializer');
 document.addEventListener('click', async (e) => {
     const trigger = e.target.closest('.modal-trigger');
@@ -16,7 +13,7 @@ document.addEventListener('click', async (e) => {
     }
 
     const id = trigger.getAttribute('data-modal-id');
-    const size = trigger.getAttribute('data-modal-size'); 
+    const size = trigger.getAttribute('data-modal-size');
     const explicitTitle = trigger.getAttribute('data-modal-title') || '';
 
     const fullUrl = id ? `${url}?id=${encodeURIComponent(id)}` : url;
@@ -76,6 +73,11 @@ document.addEventListener('click', async (e) => {
             }
         }
 
+        // Notify modules that modal content is ready
+        document.dispatchEvent(new CustomEvent('app:modal:loaded', {
+            detail: { modalEl, dialogEl, titleEl, bodyEl, footerEl, trigger, url: fullUrl }
+        }));
+
         bootstrap.Modal.getOrCreateInstance(modalEl).show();
     } catch (err) {
         console.error(err);
@@ -83,59 +85,10 @@ document.addEventListener('click', async (e) => {
     }
 });
 
-// Category save handler (kept here for compatibility)
-document.addEventListener('click', async (e) => {
-    const btn = e.target.closest('#btnSaveCategory');
-    if (!btn) return;
-
-    const form = document.getElementById('categoryForm');
-    if (!form) {
-        console.error('Không tìm thấy form #categoryForm');
-        return;
-    }
-
-    const fd = new FormData(form);
-    const id = parseInt(fd.get('Id') || '0', 10);
-    const url = id > 0 ? '/Category/Update' : '/Category/Create';
-
-    btn.disabled = true;
-    const originalText = btn.textContent;
-    btn.textContent = 'Đang xử lý...';
-
-    try {
-        const resp = await fetch(url, { method: 'POST', body: fd });
-        let json;
-        try {
-            json = await resp.json();
-        } catch {
-            json = { ok: false, message: 'Phản hồi không hợp lệ' };
-        }
-
-        if (!resp.ok || !json.ok) {
-            alert(json.message || 'Thao tác thất bại');
-        } else {
-            // Reload danh sách
-            const host = document.getElementById('category-management');
-            if (host) {
-                if (window.$) $('#category-management').removeData('loaded');
-                if (typeof window.loadCategory === 'function') window.loadCategory();
-            }
-            // Close
-            const modalEl = document.getElementById('global-modal');
-            bootstrap.Modal.getInstance(modalEl)?.hide();
-        }
-    } catch (ex) {
-        console.error(ex);
-        alert('Lỗi kết nối');
-    } finally {
-        btn.disabled = false;
-        btn.textContent = originalText;
-    }
-});
-
 document.addEventListener('hidden.bs.modal', (e) => {
     if (e.target.id === 'global-modal') {
         document.getElementById('global-modal-body').innerHTML = '';
         document.getElementById('global-modal-footer').innerHTML = '';
+        document.dispatchEvent(new CustomEvent('app:modal:closed', { detail: { modalEl: e.target } }));
     }
 });
