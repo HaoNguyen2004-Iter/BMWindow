@@ -29,6 +29,8 @@ body {
     color: $text-primary;
     background: #f8fafc;
     line-height: 1.5;
+    margin: 0;
+    padding: 0;
 }
 
 // Typography
@@ -275,6 +277,8 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     transition: $transition;
+    height: 100vh;
+    overflow: hidden;
 
     &.expanded {
         margin-left: $sidebar-collapsed;
@@ -366,6 +370,8 @@ h1, h2, h3, h4, h5, h6 {
 .content-wrapper {
     flex: 1;
     padding: 24px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .content-section {
@@ -423,9 +429,12 @@ h1, h2, h3, h4, h5, h6 {
 .table-responsive {
     overflow-x: auto;
     border-radius: 8px;
+    max-height: 600px;
+    overflow-y: auto;
 
     &::-webkit-scrollbar {
         height: 8px;
+        width: 8px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -451,6 +460,9 @@ h1, h2, h3, h4, h5, h6 {
         border-bottom: 1px solid $border-color;
         white-space: nowrap;
         text-align: left;
+        position: sticky;
+        top: 0;
+        z-index: 10;
 
         &:first-child {
             border-top-left-radius: 8px;
@@ -486,6 +498,11 @@ h1, h2, h3, h4, h5, h6 {
 
 // Filter Row
 .filter-row {
+    position: sticky;
+    top: 47px;
+    z-index: 9;
+    background: white;
+
     td {
         padding: 8px 16px !important;
         background: white !important;
@@ -582,7 +599,7 @@ h1, h2, h3, h4, h5, h6 {
 
     &.bg-success {
         background: #d1fae5;
-        
+        color: #065f46;
     }
 
     &.bg-warning {

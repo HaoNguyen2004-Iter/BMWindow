@@ -18,7 +18,8 @@ namespace Web.BMWindows.Controllers
             _categoryOne = categoryOne;
         }
 
-        [HttpGet]
+
+   [HttpGet]
         public async Task<IActionResult> AppItemGroup()
         {
             var filter = new CategoryModel();
@@ -31,6 +32,53 @@ namespace Web.BMWindows.Controllers
             var data = await _categoryMany.GetAllCategory(filter, option);
             return PartialView("~/Views/AppItem/_AppItemGroup.cshtml", data.Many);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetList([FromQuery] CategoryModel filter, [FromQuery] OptionResult option)
+        {
+            try
+            {
+                // Set default values nếu null
+                if (option == null)
+                {
+                    option = new OptionResult
+                    {
+                        Page = 1,
+                        Limit = 20,
+                        HasCount = true,
+                        OrderBy = nameof(CategoryModel.Prioritize),
+                        OrderType = "asc"
+                    };
+                }
+                else
+                {
+                    option.OrderBy ??= nameof(CategoryModel.Prioritize);
+                    option.OrderType ??= "asc";
+                }
+
+                if (filter == null)
+                {
+                    filter = new CategoryModel();
+                }
+
+                var data = await _categoryMany.GetAllCategory(filter, option);
+                
+                return Json(new
+                {
+                    ok = true,
+                    count = data.Count,
+                    many = data.Many,
+                    skip = data.Skip,
+                    take = data.Take
+                });
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 500;
+                return Json(new { ok = false, message = ex.Message });
+            }
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Update([FromForm] CategoryModel model)
