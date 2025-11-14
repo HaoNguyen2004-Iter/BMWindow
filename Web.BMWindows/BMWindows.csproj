@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\assets\js\app\appitems\**" />
+    <Content Remove="wwwroot\assets\js\app\appitems\**" />
+    <EmbeddedResource Remove="wwwroot\assets\js\app\appitems\**" />
+    <None Remove="wwwroot\assets\js\app\appitems\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\AppItem\_AppItemView.cshtml" />
   </ItemGroup>
 
@@ -25,9 +32,5 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\assets\js\app\appitems\" />
   </ItemGroup>
 </Project>

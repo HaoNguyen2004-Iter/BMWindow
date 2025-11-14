@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SPMH.Services.Utils;
 using Service.BMWindows.Variables;
 
@@ -23,24 +19,16 @@ namespace Service.BMWindows.Executes.Category
             if (string.IsNullOrWhiteSpace(model.Name)) throw new ArgumentException("Tên danh mục không hợp lệ", nameof(model));
             if (SqlGuard.IsSuspicious(model)) throw new Exception("Đầu vào không hợp lệ");
 
-            // Đảm bảo Prioritize là duy nhất (nếu yêu cầu unique)
-            if (model.Prioritize != 0)
-            {
-                var existsPrioritize = await _context.Categories.AnyAsync(x => x.Prioritize == model.Prioritize);
-                if (existsPrioritize)
-                    throw new InvalidOperationException($"Prioritize {model.Prioritize} đã tồn tại");
-            }
-
+            var now = DateTime.UtcNow;
             var entity = new DBContext.BMWindows.Entities.Category
             {
                 Name = model.Name,
-                Status = model.Status == 0 ? (byte)1 : model.Status,
-                Prioritize = model.Prioritize,
+                Status = model.Status == 0 ? 1 : model.Status,
                 Keyword = TextNormalizer.ToAsciiKeyword(model.Keyword ?? string.Empty),
-                CreateBy = model.CreateBy,
-                CreateTime = DateTime.UtcNow,
-                UpdateBy = model.UpdateBy,
-                UpdateTime = DateTime.UtcNow
+                CreatedBy = model.CreatedBy,
+                CreatedDate = now,
+                UpdatedBy = model.UpdatedBy,
+                UpdatedDate = now
             };
 
             await _context.Categories.AddAsync(entity);
@@ -51,12 +39,11 @@ namespace Service.BMWindows.Executes.Category
                 Id = entity.Id,
                 Name = entity.Name,
                 Status = entity.Status,
-                Prioritize = entity.Prioritize,
                 Keyword = entity.Keyword,
-                CreateBy = entity.CreateBy,
-                CreateTime = entity.CreateTime,
-                UpdateBy = entity.UpdateBy,
-                UpdateTime = entity.UpdateTime
+                CreatedBy = entity.CreatedBy,
+                CreatedDate = entity.CreatedDate,
+                UpdatedBy = entity.UpdatedBy ?? Guid.Empty,
+                UpdatedDate = entity.UpdatedDate
             };
         }
 
@@ -71,19 +58,11 @@ namespace Service.BMWindows.Executes.Category
             if (entity == null)
                 throw new KeyNotFoundException($"Không tìm thấy danh mục với id = {model.Id}");
 
-            if (entity.Prioritize != model.Prioritize && model.Prioritize != 0)
-            {
-                var existsPrioritize = await _context.Categories.AnyAsync(x => x.Prioritize == model.Prioritize && x.Id != model.Id);
-                if (existsPrioritize)
-                    throw new InvalidOperationException($"Prioritize {model.Prioritize} đã tồn tại");
-            }
-
             entity.Name = model.Name;
             entity.Status = model.Status;
-            entity.Prioritize = model.Prioritize;
             entity.Keyword = TextNormalizer.ToAsciiKeyword(model.Keyword ?? string.Empty);
-            entity.UpdateBy = model.UpdateBy;
-            entity.UpdateTime = DateTime.UtcNow;
+            entity.UpdatedBy = model.UpdatedBy;
+            entity.UpdatedDate = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
 
@@ -92,11 +71,10 @@ namespace Service.BMWindows.Executes.Category
                 Id = entity.Id,
                 Status = entity.Status,
                 Name = entity.Name,
-                CreateBy = entity.CreateBy,
-                CreateTime = entity.CreateTime,
-                UpdateBy = entity.UpdateBy,
-                UpdateTime = entity.UpdateTime,
-                Prioritize = entity.Prioritize,
+                CreatedBy = entity.CreatedBy,
+                CreatedDate = entity.CreatedDate,
+                UpdatedBy = entity.UpdatedBy ?? Guid.Empty,
+                UpdatedDate = entity.UpdatedDate,
                 Keyword = entity.Keyword
             };
         }
@@ -110,7 +88,7 @@ namespace Service.BMWindows.Executes.Category
                 throw new KeyNotFoundException($"Không tìm thấy danh mục với id = {id}");
 
             entity.Status = 0;
-            entity.UpdateTime = DateTime.UtcNow;
+            entity.UpdatedDate = DateTime.UtcNow;
             await _context.SaveChangesAsync();
             return true;
         }

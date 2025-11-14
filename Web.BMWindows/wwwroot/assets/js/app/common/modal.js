@@ -34,7 +34,6 @@ document.addEventListener('click', async (e) => {
         dialogEl.classList.add(`modal-${size}`);
     }
 
-    // Loading placeholder
     titleEl.textContent = explicitTitle || 'Đang tải...';
     bodyEl.innerHTML = '<div class="py-5 text-center text-muted"><i class="fa fa-spinner fa-spin me-2"></i>Đang tải...</div>';
     footerEl.classList.add('d-none');
@@ -50,7 +49,6 @@ document.addEventListener('click', async (e) => {
             temp.innerHTML = html;
             const contentRoot = temp.querySelector('.modal-content') || temp;
 
-            // Title
             let titleText = explicitTitle;
             const titleFromPartial = contentRoot.querySelector('.modal-title');
             if (!titleText && titleFromPartial) {
@@ -58,11 +56,9 @@ document.addEventListener('click', async (e) => {
             }
             titleEl.textContent = titleText;
 
-            // Body
             const bodyFromPartial = contentRoot.querySelector('.modal-body');
             bodyEl.innerHTML = bodyFromPartial ? bodyFromPartial.innerHTML : contentRoot.innerHTML;
 
-            // Footer
             const footerFromPartial = contentRoot.querySelector('.modal-footer');
             if (footerFromPartial) {
                 footerEl.innerHTML = footerFromPartial.innerHTML;
@@ -73,7 +69,6 @@ document.addEventListener('click', async (e) => {
             }
         }
 
-        // Notify modules that modal content is ready
         document.dispatchEvent(new CustomEvent('app:modal:loaded', {
             detail: { modalEl, dialogEl, titleEl, bodyEl, footerEl, trigger, url: fullUrl }
         }));

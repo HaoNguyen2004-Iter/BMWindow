@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Service.BMWindows.Executes.Category
 {
@@ -15,7 +11,6 @@ namespace Service.BMWindows.Executes.Category
             _context = context;
         }
 
-        // Bất đồng bộ hóa
         public async Task<CategoryModel> GetOneCategory(int id)
         {
             if (id <= 0)
@@ -28,11 +23,10 @@ namespace Service.BMWindows.Executes.Category
                     Id = x.Id,
                     Status = x.Status,
                     Name = x.Name,
-                    CreateBy = x.CreateBy,
-                    CreateTime = x.CreateTime,
-                    UpdateBy = x.UpdateBy,
-                    UpdateTime = x.UpdateTime,
-                    Prioritize = x.Prioritize,
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    UpdatedBy = x.UpdatedBy ?? Guid.Empty,
+                    UpdatedDate = x.UpdatedDate,
                     Keyword = x.Keyword
                 })
                 .FirstOrDefaultAsync();

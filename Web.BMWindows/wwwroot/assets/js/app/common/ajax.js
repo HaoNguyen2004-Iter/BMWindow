@@ -1,4 +1,3 @@
-// Lightweight AJAX helpers and exports used by app modules
 const Ajax = {
     get: async (url) => {
         const resp = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });

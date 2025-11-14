@@ -1,4 +1,7 @@
 ﻿@* Danh sách ứng dụng *@
+@using Service.BMWindows.Executes.AppItem
+@model IEnumerable<AppItemModel>
+
 <section id="app-management" class="content-section">
     <div class="page-header">
         <div>
@@ -20,9 +23,6 @@
                             <th>Tên ứng dụng</th>
                             <th>Nhóm ứng dụng</th>
                             <th>Domain web</th>
-                            <th>Secret Key</th>
-                            <th width="120">Thời hạn token (phút)</th>
-                            <th width="120">Ngày hết hạn</th>
                             <th>Trạng thái</th>
                             <th width="100">TT sắp xếp</th>
                             <th>Người tạo</th>
@@ -37,75 +37,76 @@
                             <td>
                                 <select class="form-select form-select-sm">
                                     <option>Tất cả</option>
-                                    <option>Nhân sự</option>
-                                    <option>Xây dựng</option>
                                 </select>
                             </td>
                             <td><input type="text" class="form-control form-control-sm" placeholder="Domain..."></td>
-                            <td><input type="text" class="form-control form-control-sm" placeholder="Secret..."></td>
-                            <td></td>
-                            <td></td>
                             <td>
                                 <select class="form-select form-select-sm">
                                     <option>Tất cả</option>
-                                    <option>Hoạt động</option>
-                                    <option>Tạm dừng</option>
+                                    <option value="1">Hoạt động</option>
+                                    <option value="0">Tạm dừng</option>
                                 </select>
                             </td>
                             <td colspan="6"></td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><strong>PORTAL</strong></td>
-                            <td>Tất cả</td>
-                            <td><a href="https://portal.lassvn.net" target="_blank">https://portal.lassvn.net</a></td>
-                            <td><code class="text-muted">abc123***</code></td>
-                            <td class="text-center">60</td>
-                            <td>31/12/2025</td>
-                            <td><span class="badge bg-success">Hoạt động</span></td>
-                            <td>1</td>
-                            <td>Administrator</td>
-                            <td>01/11/2021</td>
-                            <td>Administrator</td>
-                            <td>10/11/2025</td>
-                            <td class="text-end">
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#app-modal" title="Chỉnh sửa">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger" title="Xóa">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><strong>HRIS</strong></td>
-                            <td>Nhân sự</td>
-                            <td><a href="http://localhost:50087" target="_blank">http://localhost:50087</a></td>
-                            <td><code class="text-muted">xyz789***</code></td>
-                            <td class="text-center">30</td>
-                            <td>15/06/2026</td>
-                            <td><span class="badge bg-success">Hoạt động</span></td>
-                            <td>0</td>
-                            <td>Administrator</td>
-                            <td>02/11/2021</td>
-                            <td>Administrator</td>
-                            <td>09/11/2025</td>
-                            <td class="text-end">
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#app-modal" title="Chỉnh sửa">
-                                        <i class="fa-solid fa-pen"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger" title="Xóa">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="11" class="text-center text-muted py-4">
+                                    Không có dữ liệu ứng dụng
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            var stt = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@stt</td>
+                                    <td><strong>@item.Name</strong></td>
+                                    <td>@item.CategoryId</td>
+                                    <td>
+                                        @if (!string.IsNullOrWhiteSpace(item.Url))
+                                        {
+                                            <a href="@item.Url" target="_blank">@item.Url</a>
+                                        }
+                                        else
+                                        {
+                                            @("-")
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.Status == 1)
+                                        {
+                                            <span class="badge bg-success">Hoạt động</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Tạm dừng</span>
+                                        }
+                                    </td>
+                                    <td>@item.Prioritize</td>
+                                    <td>@item.CreatedBy</td>
+                                    <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                    <td>@item.UpdatedBy</td>
+                                    <td>@item.UpdatedDate.ToString("dd/MM/yyyy")</td>
+                                    <td class="text-end">
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#app-modal" title="Chỉnh sửa">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" title="Xóa">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                stt++;
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -132,56 +133,43 @@
                             <label class="form-label">Nhóm ứng dụng <span class="text-danger">*</span></label>
                             <select class="form-select">
                                 <option>Chọn nhóm...</option>
-                                <option>Nhân sự</option>
-                                <option>Xây dựng</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Domain web <span class="text-danger">*</span></label>
-                        <input type="url" class="form-control" placeholder="https://example.com">
-                    </div>
-
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Secret Key <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <input type="password" class="form-control" id="secretKey" placeholder="Nhập secret key">
-                                <button class="btn btn-outline-secondary" type="button" onclick="toggleSecret()">
-                                    <i class="fa-solid fa-eye" id="toggleIcon"></i>
-                                </button>
-                                <button class="btn btn-outline-primary" type="button" onclick="generateSecret()">
-                                    <i class="fa-solid fa-refresh"></i> Tạo mới
-                                </button>
-                            </div>
-                            <small class="text-muted">Secret key dùng để xác thực API</small>
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Domain web</label>
+                            <input type="url" class="form-control" placeholder="https://example.com">
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Thời hạn Access Token (phút) <span class="text-danger">*</span></label>
-                            <input type="number" class="form-control" placeholder="60" value="60" min="1">
-                            <small class="text-muted">Thời gian token hết hiệu lực</small>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Ngày hết hạn ứng dụng <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control">
-                            <small class="text-muted">Ngày ứng dụng ngừng hoạt động</small>
-                        </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label class="form-label">Thứ tự sắp xếp</label>
-                            <input type="number" class="form-control" placeholder="0" value="0">
+                            <input type="number" class="form-control" placeholder="0" value="0" min="0">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Icon</label>
+                            <input type="text" class="form-control" placeholder="fa-solid fa-app">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Kích thước</label>
+                            <input type="text" class="form-control" placeholder="ví dụ: 32x32">
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Trạng thái</label>
                         <select class="form-select">
-                            <option value="active" selected>Hoạt động</option>
-                            <option value="inactive">Tạm dừng</option>
+                            <option value="1" selected>Hoạt động</option>
+                            <option value="0">Tạm dừng</option>
                         </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Từ khóa</label>
+                        <input type="text" class="form-control" placeholder="Từ khóa tìm kiếm">
                     </div>
                 </form>
             </div>

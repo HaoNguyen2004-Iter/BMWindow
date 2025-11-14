@@ -1,9 +1,3 @@
-
-// Navigation handler (improved)
-// - Uses event delegation, works for any element with `data-target`
-// - Adds/removes `.active` on nav links and content sections
-// - Updates breadcrumb using `data-breadcrumb` or link text
-// - Safe to load multiple times (guards against double-init)
 if (!window.__bm_navigation_initialized) {
     window.__bm_navigation_initialized = true;
 

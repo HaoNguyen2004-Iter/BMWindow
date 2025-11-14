@@ -20,11 +20,11 @@ namespace Service.BMWindows.Executes.AppItem
             if (model.CategoryId <= 0) throw new ArgumentOutOfRangeException(nameof(model.CategoryId), "CategoryId không hợp lệ");
             if (SqlGuard.IsSuspicious(model)) throw new Exception("Đầu vào không hợp lệ");
 
-            // Đảm bảo Prioritize là duy nhất
             var existsPrioritize = await _context.AppItems.AnyAsync(x => x.Prioritize == model.Prioritize);
             if (existsPrioritize)
                 throw new InvalidOperationException($"Prioritize {model.Prioritize} đã tồn tại");
 
+            var now = DateTime.UtcNow;
             var entity = new DBContext.BMWindows.Entities.AppItem
             {
                 CategoryId = model.CategoryId,
@@ -32,16 +32,13 @@ namespace Service.BMWindows.Executes.AppItem
                 Icon = model.Icon,
                 Size = model.Size,
                 Url = model.Url,
-                Token = model.Token,
-                Expired = model.Expired,
-                AppExpire = model.AppExpire,
                 Prioritize = model.Prioritize,
-                CreateBy = model.CreateBy,
-                CreateTime = DateTime.UtcNow,
-                Status = model.Status == 0 ? (byte)1 : model.Status,
+                Status = model.Status == 0 ? 1 : model.Status,
                 Keyword = TextNormalizer.ToAsciiKeyword(model.Keyword ?? string.Empty),
-                UpdateBy = model.UpdateBy,
-                UpdateTime = DateTime.UtcNow
+                CreatedBy = model.CreatedBy,      // map model -> entity
+                CreatedDate = now,
+                UpdatedBy = model.UpdatedBy == Guid.Empty ? model.CreatedBy : model.UpdatedBy,
+                UpdatedDate = now
             };
 
             await _context.AppItems.AddAsync(entity);
@@ -55,16 +52,13 @@ namespace Service.BMWindows.Executes.AppItem
                 Icon = entity.Icon,
                 Size = entity.Size,
                 Url = entity.Url,
-                Token = entity.Token,
-                Expired = entity.Expired,
-                AppExpire = entity.AppExpire,
                 Prioritize = entity.Prioritize,
-                CreateBy = entity.CreateBy,
-                CreateTime = entity.CreateTime,
                 Status = entity.Status,
                 Keyword = entity.Keyword,
-                UpdateBy = entity.UpdateBy,
-                UpdateTime = entity.UpdateTime
+                CreatedBy = entity.CreatedBy,     
+                CreatedDate = entity.CreatedDate,
+                UpdatedBy = entity.UpdatedBy,
+                UpdatedDate = entity.UpdatedDate
             };
         }
 
@@ -91,14 +85,11 @@ namespace Service.BMWindows.Executes.AppItem
             entity.Icon = model.Icon;
             entity.Size = model.Size;
             entity.Url = model.Url;
-            entity.Token = model.Token;
-            entity.Expired = model.Expired;
-            entity.AppExpire = model.AppExpire;
             entity.Prioritize = model.Prioritize;
             entity.Status = model.Status;
             entity.Keyword = TextNormalizer.ToAsciiKeyword(model.Keyword ?? string.Empty);
-            entity.UpdateBy = model.UpdateBy;
-            entity.UpdateTime = DateTime.UtcNow;
+            entity.UpdatedBy = model.UpdatedBy == Guid.Empty ? entity.UpdatedBy : model.UpdatedBy;
+            entity.UpdatedDate = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
 
@@ -110,16 +101,13 @@ namespace Service.BMWindows.Executes.AppItem
                 Icon = entity.Icon,
                 Size = entity.Size,
                 Url = entity.Url,
-                Token = entity.Token,
-                Expired = entity.Expired,
-                AppExpire = entity.AppExpire,
                 Prioritize = entity.Prioritize,
-                CreateBy = entity.CreateBy,
-                CreateTime = entity.CreateTime,
                 Status = entity.Status,
                 Keyword = entity.Keyword,
-                UpdateBy = entity.UpdateBy,
-                UpdateTime = entity.UpdateTime
+                CreatedBy = entity.CreatedBy,
+                CreatedDate = entity.CreatedDate,
+                UpdatedBy = entity.UpdatedBy,
+                UpdatedDate = entity.UpdatedDate
             };
         }
 
@@ -132,10 +120,9 @@ namespace Service.BMWindows.Executes.AppItem
                 throw new KeyNotFoundException($"Không tìm thấy ứng dụng với id = {id}");
 
             entity.Status = 0;
-            entity.UpdateTime = DateTime.UtcNow;
+            entity.UpdatedDate = DateTime.UtcNow;
             await _context.SaveChangesAsync();
             return true;
         }
-
     }
 }
