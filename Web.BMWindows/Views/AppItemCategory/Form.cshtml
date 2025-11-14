@@ -1,0 +1,26 @@
+﻿@using Service.BMWindows.Executes.Category
+@model CategoryModel
+
+<div class="modal-header">
+    <h5 class="modal-title">@(Model.Id > 0 ? "Sửa Nhóm ứng dụng" : "Thêm Nhóm ứng dụng")</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+    <form id="categoryForm">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="mb-3">
+            <label class="form-label">Tên nhóm</label>
+            <input type="text" class="form-control" name="Name" value="@Model.Name" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ưu tiên</label>
+            <input type="number" class="form-control" name="Prioritize" value="@Model.Prioritize" min="0" />
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+    <button type="button" class="btn btn-primary" id="btnSaveCategory">Lưu</button>
+</div>

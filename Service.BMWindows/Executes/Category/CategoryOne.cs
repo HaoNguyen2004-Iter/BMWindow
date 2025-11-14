@@ -23,6 +23,7 @@ namespace Service.BMWindows.Executes.Category
                     Id = x.Id,
                     Status = x.Status,
                     Name = x.Name,
+                    Prioritize = x.Prioritize,
                     CreatedBy = x.CreatedBy,
                     CreatedDate = x.CreatedDate,
                     UpdatedBy = x.UpdatedBy ?? Guid.Empty,

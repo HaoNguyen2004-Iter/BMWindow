@@ -14,11 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\AppItem\_AppItemView.cshtml" />
+    <Content Remove="Views\AppItemCategory\_AppItemView.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\AppItem\_AppItemView.cshtml" />
+    <None Include="Views\AppItem\Form.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

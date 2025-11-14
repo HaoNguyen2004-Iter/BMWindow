@@ -22,6 +22,7 @@ namespace DBContext.BMWindows.Entities
                 entity.Property(e => e.Name)
                       .IsRequired()
                       .HasMaxLength(200);
+                entity.HasIndex(x => x.Prioritize).IsUnique(false);
 
                 entity.Property(e => e.Status)
                       .IsRequired()

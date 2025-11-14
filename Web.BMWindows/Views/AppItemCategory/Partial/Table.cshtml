@@ -1,0 +1,60 @@
+﻿@using Service.BMWindows.Executes.Category
+@using SPMH.Services.Utils
+@model PagedResult<CategoryModel>
+
+<div id="category-table-host" class="table-responsive">
+    <table class="table table-hover align-middle data-table">
+        <thead>
+            <tr>
+                <th width="50">STT</th>
+                <th>Tên nhóm</th>
+                <th>Ưu tiên</th>
+                <th>Người tạo</th>
+                <th>Ngày tạo</th>
+                <th>Người sửa</th>
+                <th>Ngày sửa</th>
+                <th width="120" class="text-end">Hành động</th>
+            </tr>
+            <tr class="filter-row">
+                <td></td>
+                <td><input type="text" class="form-control form-control-sm" placeholder="Tìm kiếm..." data-filter="Keyword" /></td>
+                <td colspan="5"></td>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model?.Items == null || !Model.Items.Any())
+            {
+                <tr>
+                    <td colspan="8" class="text-center text-muted py-4">Không có dữ liệu nhóm ứng dụng</td>
+                </tr>
+            }
+            else
+            {
+                var stt = (Model.Page - 1) * Model.PageSize + 1;
+                foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td><strong>@item.Name</strong></td>
+                        <td>@item.Prioritize</td>
+                        <td>@item.CreatedBy</td>
+                        <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                        <td>@(item.UpdatedBy != Guid.Empty ? item.UpdatedBy.ToString() : "-")</td>
+                        <td>@(item.UpdatedDate?.ToString("dd/MM/yyyy") ?? "-")</td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-warning modal-trigger"
+                                    data-modal-url="/Category/Detail"
+                                    data-modal-id="@item.Id"
+                                    data-modal-title="Chỉnh sửa Nhóm ứng dụng"
+                                    data-modal-size="md"
+                                    title="Chỉnh sửa">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        </tbody>
+    </table>
+</div>

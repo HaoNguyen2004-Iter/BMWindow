@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SPMH.Services.Utils;
-using Service.BMWindows.Variables;
 
 namespace Service.BMWindows.Executes.Category
 {
@@ -25,6 +24,7 @@ namespace Service.BMWindows.Executes.Category
                 Name = model.Name,
                 Status = model.Status == 0 ? 1 : model.Status,
                 Keyword = TextNormalizer.ToAsciiKeyword(model.Keyword ?? string.Empty),
+                Prioritize = model.Prioritize < 0 ? 0 : model.Prioritize, // MAP Prioritize
                 CreatedBy = model.CreatedBy,
                 CreatedDate = now,
                 UpdatedBy = model.UpdatedBy,
@@ -40,6 +40,7 @@ namespace Service.BMWindows.Executes.Category
                 Name = entity.Name,
                 Status = entity.Status,
                 Keyword = entity.Keyword,
+                Prioritize = entity.Prioritize, // RETURN Prioritize
                 CreatedBy = entity.CreatedBy,
                 CreatedDate = entity.CreatedDate,
                 UpdatedBy = entity.UpdatedBy ?? Guid.Empty,
@@ -61,6 +62,7 @@ namespace Service.BMWindows.Executes.Category
             entity.Name = model.Name;
             entity.Status = model.Status;
             entity.Keyword = TextNormalizer.ToAsciiKeyword(model.Keyword ?? string.Empty);
+            entity.Prioritize = model.Prioritize < 0 ? 0 : model.Prioritize; 
             entity.UpdatedBy = model.UpdatedBy;
             entity.UpdatedDate = DateTime.UtcNow;
 
@@ -71,26 +73,13 @@ namespace Service.BMWindows.Executes.Category
                 Id = entity.Id,
                 Status = entity.Status,
                 Name = entity.Name,
+                Keyword = entity.Keyword,
+                Prioritize = entity.Prioritize, 
                 CreatedBy = entity.CreatedBy,
                 CreatedDate = entity.CreatedDate,
                 UpdatedBy = entity.UpdatedBy ?? Guid.Empty,
-                UpdatedDate = entity.UpdatedDate,
-                Keyword = entity.Keyword
+                UpdatedDate = entity.UpdatedDate
             };
-        }
-
-        public async Task<bool> ChangeStatus(int id)
-        {
-            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id), "Lỗi khi đổi trạng thái");
-
-            var entity = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
-            if (entity == null)
-                throw new KeyNotFoundException($"Không tìm thấy danh mục với id = {id}");
-
-            entity.Status = 0;
-            entity.UpdatedDate = DateTime.UtcNow;
-            await _context.SaveChangesAsync();
-            return true;
         }
     }
 }

@@ -1,79 +1,97 @@
-﻿using Service.BMWindows.Variables;
-using SPMH.Services.Utils;
+﻿//using Microsoft.EntityFrameworkCore;
+//using SPMH.Services.Utils;
 
-namespace Service.BMWindows.Executes.AppItem
-{
-    public class AppItemMany
-    {
-        private readonly DBContext.BMWindows.Entities.BMWindowDBContext _context;
+//namespace Service.BMWindows.Executes.AppItem
+//{
+//    public class AppItemMany
+//    {
+//        private readonly DBContext.BMWindows.Entities.BMWindowDBContext _context;
 
-        public AppItemMany(DBContext.BMWindows.Entities.BMWindowDBContext context)
-        {
-            _context = context;
-        }
+//        public AppItemMany(DBContext.BMWindows.Entities.BMWindowDBContext context)
+//        {
+//            _context = context;
+//        }
 
-        public Task<QueryResult<AppItemModel>> GetAllAppItem(AppItemModel model, OptionResult option)
-            => AppItemData(model, option);
+//        public async Task<PagedResult<AppItemModel>> GetAllAppItem(int page, int pageSize, AppItemModel? filter)
+//        {
+//            if (page < 1) page = 1;
+//            if (pageSize < 1) pageSize = 5;
 
-        private async Task<QueryResult<AppItemModel>> AppItemData(AppItemModel model, OptionResult option)
-        {
-            if (SqlGuard.IsSuspicious(model))
-                throw new Exception("Đầu vào không hợp lệ");
+//            if (filter != null && SqlGuard.IsSuspicious(filter))
+//                throw new ArgumentException("Đầu vào không hợp lệ");
 
-            IQueryable<DBContext.BMWindows.Entities.AppItem> q = _context.AppItems;
+//            var query = BuildQuery(filter);
 
-            if (model.Id != 0)
-                q = q.Where(x => x.Id == model.Id);
+//            var ordered = query
+//                .OrderBy(x => x.Prioritize)
+//                .ThenByDescending(x => x.Id);
 
-            if (model.CategoryId != 0)
-                q = q.Where(x => x.CategoryId == model.CategoryId);
+//            var total = await query.CountAsync();
 
-            if (!string.IsNullOrWhiteSpace(model.Keyword))
-            {
-                var kw = TextNormalizer.ToAsciiKeyword(model.Keyword);
-                q = q.Where(x => x.Keyword!.Contains(kw));
-            }
+//            var items = await ordered
+//                .Skip((page - 1) * pageSize)
+//                .Take(pageSize)
+//                .Select(x => new AppItemModel
+//                {
+//                    Id = x.Id,
+//                    CategoryId = x.CategoryId,
+//                    Name = x.Name,
+//                    Icon = x.Icon,
+//                    Size = x.Size,
+//                    Url = x.Url,
+//                    Prioritize = x.Prioritize,
+//                    Status = x.Status,
+//                    Keyword = x.Keyword,
+//                    CreatedBy = x.CreatedBy,
+//                    CreatedDate = x.CreatedDate,
+//                    UpdatedBy = x.UpdatedBy,
+//                    UpdatedDate = x.UpdatedDate
+//                })
+//                .ToListAsync();
 
-            if (model.CreateDateFrom != null)
-                q = q.Where(x => x.CreatedDate >= model.CreateDateFrom.Value);
-            if (model.CreateDateTo != null)
-            {
-                var toCreate = model.CreateDateTo.Value.Date.AddDays(1).AddMilliseconds(-1);
-                q = q.Where(x => x.CreatedDate <= toCreate);
-            }
+//            return new PagedResult<AppItemModel>(items, total, page, pageSize);
+//        }
 
-            if (model.UpdateDateFrom != null)
-                q = q.Where(x => x.UpdatedDate >= model.UpdateDateFrom.Value);
-            if (model.UpdateDateTo != null)
-            {
-                var toUpdate = model.UpdateDateTo.Value.Date.AddDays(1).AddMilliseconds(-1);
-                q = q.Where(x => x.UpdatedDate <= toUpdate);
-            }
+//        private IQueryable<DBContext.BMWindows.Entities.AppItem> BuildQuery(AppItemModel? model)
+//        {
+//            var q = _context.AppItems.AsQueryable();
+//            if (model == null) return q;
 
-            if (model.Prioritize != 0)
-                q = q.Where(x => x.Prioritize == model.Prioritize);
+//            if (model.Id != 0)
+//                q = q.Where(x => x.Id == model.Id);
 
-            if (model.Status != 0)
-                q = q.Where(x => x.Status == model.Status);
+//            if (model.CategoryId != 0)
+//                q = q.Where(x => x.CategoryId == model.CategoryId);
 
-            var result = q.Select(x => new AppItemModel
-            {
-                Id = x.Id,
-                CategoryId = x.CategoryId,
-                Name = x.Name,
-                Icon = x.Icon,
-                Size = x.Size,
-                Url = x.Url,
-                Prioritize = x.Prioritize,
-                Status = x.Status,
-                Keyword = x.Keyword,
-                CreatedBy = x.CreatedBy,
-                CreatedDate = x.CreatedDate,
-                UpdatedBy = x.UpdatedBy,
-                UpdatedDate = x.UpdatedDate
-            });
+//            if (!string.IsNullOrWhiteSpace(model.Keyword))
+//            {
+//                var kw = TextNormalizer.ToAsciiKeyword(model.Keyword);
+//                q = q.Where(x => x.Keyword!.Contains(kw));
+//            }
 
-            return await Task.FromResult(new QueryResult<AppItemModel>(result, option));
-        }
-    }
-}
+//            if (model.CreateDateFrom != null)
+//                q = q.Where(x => x.CreatedDate >= model.CreateDateFrom.Value);
+//            if (model.CreateDateTo != null)
+//            {
+//                var toCreate = model.CreateDateTo.Value.Date.AddDays(1).AddMilliseconds(-1);
+//                q = q.Where(x => x.CreatedDate <= toCreate);
+//            }
+
+//            if (model.UpdateDateFrom != null)
+//                q = q.Where(x => x.UpdatedDate >= model.UpdateDateFrom.Value);
+//            if (model.UpdateDateTo != null)
+//            {
+//                var toUpdate = model.UpdateDateTo.Value.Date.AddDays(1).AddMilliseconds(-1);
+//                q = q.Where(x => x.UpdatedDate <= toUpdate);
+//            }
+
+//            if (model.Prioritize != 0)
+//                q = q.Where(x => x.Prioritize == model.Prioritize);
+
+//            if (model.Status != 0)
+//                q = q.Where(x => x.Status == model.Status);
+
+//            return q;
+//        }
+//    }
+//}

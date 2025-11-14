@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.BMWindows.Executes.AppItem;
 using Service.BMWindows.Executes.Category;
-using Service.BMWindows.Variables;
 
 namespace Web.BMWindows.Controllers
 {
@@ -19,66 +18,12 @@ namespace Web.BMWindows.Controllers
         }
 
 
-   [HttpGet]
-        public async Task<IActionResult> AppItemGroup()
-        {
-            var filter = new CategoryModel();
-            var option = new OptionResult
-            {
-                Unlimited = true,
-                OrderBy = nameof(CategoryModel.Prioritize),
-                OrderType = "asc"
-            };
-            var data = await _categoryMany.GetAllCategory(filter, option);
-            return PartialView("~/Views/AppItem/_AppItemGroup.cshtml", data.Many);
-        }
-
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] CategoryModel filter, [FromQuery] OptionResult option)
+        public async Task<IActionResult> AppItemGroup([FromQuery] CategoryModel? filter, int page = 1, int pageSize = 5, string? part = null)
         {
-            try
-            {
-                // Set default values nếu null
-                if (option == null)
-                {
-                    option = new OptionResult
-                    {
-                        Page = 1,
-                        Limit = 20,
-                        HasCount = true,
-                        OrderBy = nameof(CategoryModel.Prioritize),
-                        OrderType = "asc"
-                    };
-                }
-                else
-                {
-                    option.OrderBy ??= nameof(CategoryModel.Prioritize);
-                    option.OrderType ??= "asc";
-                }
-
-                if (filter == null)
-                {
-                    filter = new CategoryModel();
-                }
-
-                var data = await _categoryMany.GetAllCategory(filter, option);
-                
-                return Json(new
-                {
-                    ok = true,
-                    count = data.Count,
-                    many = data.Many,
-                    skip = data.Skip,
-                    take = data.Take
-                });
-            }
-            catch (Exception ex)
-            {
-                Response.StatusCode = 500;
-                return Json(new { ok = false, message = ex.Message });
-            }
+            var data = await _categoryMany.GetAllCategory(page, pageSize, filter);
+            return PartialView("~/Views/AppItemCategory/Index.cshtml", data);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Update([FromForm] CategoryModel model)
@@ -142,13 +87,12 @@ namespace Web.BMWindows.Controllers
             {
                 if (!id.HasValue || id.Value <= 0)
                 {
-                    // Create mode: empty model
                     var empty = new CategoryModel { Id = 0, Status = 1 };
-                    return PartialView("~/Views/AppItem/_AppItemGroupView.cshtml", empty);
+                    return PartialView("~/Views/AppItemCategory/Form.cshtml", empty);
                 }
 
                 var model = await _categoryOne.GetOneCategory(id.Value);
-                return PartialView("~/Views/AppItem/_AppItemGroupView.cshtml", model);
+                return PartialView("~/Views/AppItemCategory/Form.cshtml", model);
             }
             catch (Exception ex)
             {

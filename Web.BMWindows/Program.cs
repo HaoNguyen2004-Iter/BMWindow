@@ -21,9 +21,9 @@ builder.Services.AddDbContext<BMWindowDBContext>(options =>
 builder.Services.AddScoped<Service.BMWindows.Executes.Category.CategoryMany>();
 builder.Services.AddScoped<Service.BMWindows.Executes.Category.CategoryCommand>();
 builder.Services.AddScoped<Service.BMWindows.Executes.Category.CategoryOne>(); 
-builder.Services.AddScoped<Service.BMWindows.Executes.AppItem.AppItemMany>();
-builder.Services.AddScoped<Service.BMWindows.Executes.AppItem.AppItemCommand>();
-builder.Services.AddScoped<Service.BMWindows.Executes.AppItem.AppItemOne>();
+//builder.Services.AddScoped<Service.BMWindows.Executes.AppItem.AppItemMany>();
+//builder.Services.AddScoped<Service.BMWindows.Executes.AppItem.AppItemCommand>();
+//builder.Services.AddScoped<Service.BMWindows.Executes.AppItem.AppItemOne>();
 
 var app = builder.Build();
 

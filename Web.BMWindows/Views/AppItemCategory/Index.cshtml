@@ -1,0 +1,34 @@
+﻿@using Service.BMWindows.Executes.Category
+@using SPMH.Services.Utils
+@model PagedResult<CategoryModel>
+
+@{
+    // fragmentMode: chỉ load lại phần bảng + phân trang khi ?part=fragment
+    var fragmentMode = string.Equals(Context.Request.Query["part"], "fragment", StringComparison.OrdinalIgnoreCase);
+}
+
+@if (!fragmentMode)
+{
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Quản lý Nhóm ứng dụng</h1>
+            <p class="page-description">Quản lý các nhóm phân loại ứng dụng</p>
+        </div>
+        <button class="btn btn-primary modal-trigger"
+                data-modal-url="/Category/Detail"
+                data-modal-id="0"
+                data-modal-title="Tạo nhóm mới"
+                data-modal-size="md">
+            <i class="fa-solid fa-plus"></i> Tạo nhóm mới
+        </button>
+    </div>
+}
+
+<div class="card">
+    <div class="card-body">
+        <div id="category-fragment">
+            @await Html.PartialAsync("~/Views/AppItemCategory/Partial/Table.cshtml", Model)
+            @await Html.PartialAsync("~/Views/AppItemCategory/Partial/Pagination.cshtml", Model)
+        </div>
+    </div>
+</div>

@@ -11,14 +11,39 @@
   --bg-hover: #f8fafc;
 }
 
+html,
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  color: #1e293b;
-  background: #f8fafc;
-  line-height: 1.5;
-  margin: 0;
-  padding: 0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    color: #1e293b;
+    background: #f8fafc;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+/* Đặt style mặc định cho scrollbar (nếu muốn chỉnh) */
+*::-webkit-scrollbar {
+    width: 8px; /* scrollbar dọc mặc định */
+    height: 8px; /* scrollbar ngang mặc định */
+}
+
+    /* ẨN CHỈ THANH DỌC */
+    *::-webkit-scrollbar:vertical {
+        width: 0px; /* thu chiều ngang thanh dọc về 0 */
+    }
+
+    /* Giữ THANH NGANG còn sống */
+    *::-webkit-scrollbar:horizontal {
+        height: 8px; /* để nó còn thấy được */
+    }
+
+/* Cho chắc: ẩn luôn thumb & track dọc */
+*::-webkit-scrollbar-thumb:vertical,
+*::-webkit-scrollbar-track:vertical {
+    display: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
