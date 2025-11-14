@@ -30,23 +30,23 @@ namespace Service.BMWindows.Executes.Category
             if (!string.IsNullOrWhiteSpace(model.Keyword))
             {
                 var kw = TextNormalizer.ToAsciiKeyword(model.Keyword);
-                q = q.Where(x => x.Keyword.Contains(kw));
+                q = q.Where(x => x.Keyword!.Contains(kw));
             }
 
             if (model.CreateDateFrom != null)
-                q = q.Where(x => x.CreateTime >= model.CreateDateFrom.Value);
+                q = q.Where(x => x.CreatedDate >= model.CreateDateFrom.Value);
             if (model.CreateDateTo != null)
             {
                 var toCreate = model.CreateDateTo.Value.Date.AddDays(1).AddMilliseconds(-1);
-                q = q.Where(x => x.CreateTime <= toCreate);
+                q = q.Where(x => x.CreatedDate <= toCreate);
             }
 
             if (model.UpdateDateFrom != null)
-                q = q.Where(x => x.UpdateTime >= model.UpdateDateFrom.Value);
+                q = q.Where(x => x.UpdatedDate >= model.UpdateDateFrom.Value);
             if (model.UpdateDateTo != null)
             {
                 var toUpdate = model.UpdateDateTo.Value.Date.AddDays(1).AddMilliseconds(-1);
-                q = q.Where(x => x.UpdateTime <= toUpdate);
+                q = q.Where(x => x.UpdatedDate <= toUpdate);
             }
 
             var projected = q.Select(x => new CategoryModel
@@ -54,11 +54,11 @@ namespace Service.BMWindows.Executes.Category
                 Id = x.Id,
                 Status = x.Status,
                 Name = x.Name,
-                CreateBy = x.CreateBy,
-                CreateTime = x.CreateTime,
-                UpdateBy = x.UpdateBy,
-                UpdateTime = x.UpdateTime,
                 Prioritize = x.Prioritize,
+                CreatedBy = x.CreatedBy,
+                CreatedDate = x.CreatedDate,
+                UpdatedBy = x.UpdatedBy ?? Guid.Empty,
+                UpdatedDate = x.UpdatedDate,
                 Keyword = x.Keyword
             });
 

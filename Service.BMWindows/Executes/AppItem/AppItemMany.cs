@@ -31,23 +31,23 @@ namespace Service.BMWindows.Executes.AppItem
             if (!string.IsNullOrWhiteSpace(model.Keyword))
             {
                 var kw = TextNormalizer.ToAsciiKeyword(model.Keyword);
-                q = q.Where(x => x.Keyword.Contains(kw));
+                q = q.Where(x => x.Keyword!.Contains(kw));
             }
 
             if (model.CreateDateFrom != null)
-                q = q.Where(x => x.CreateTime >= model.CreateDateFrom.Value);
+                q = q.Where(x => x.CreatedDate >= model.CreateDateFrom.Value);
             if (model.CreateDateTo != null)
             {
                 var toCreate = model.CreateDateTo.Value.Date.AddDays(1).AddMilliseconds(-1);
-                q = q.Where(x => x.CreateTime <= toCreate);
+                q = q.Where(x => x.CreatedDate <= toCreate);
             }
 
             if (model.UpdateDateFrom != null)
-                q = q.Where(x => x.UpdateTime >= model.UpdateDateFrom.Value);
+                q = q.Where(x => x.UpdatedDate >= model.UpdateDateFrom.Value);
             if (model.UpdateDateTo != null)
             {
                 var toUpdate = model.UpdateDateTo.Value.Date.AddDays(1).AddMilliseconds(-1);
-                q = q.Where(x => x.UpdateTime <= toUpdate);
+                q = q.Where(x => x.UpdatedDate <= toUpdate);
             }
 
             if (model.Prioritize != 0)
@@ -64,16 +64,13 @@ namespace Service.BMWindows.Executes.AppItem
                 Icon = x.Icon,
                 Size = x.Size,
                 Url = x.Url,
-                Token = x.Token,
-                Expired = x.Expired,
-                AppExpire = x.AppExpire,
                 Prioritize = x.Prioritize,
-                CreateBy = x.CreateBy,
-                CreateTime = x.CreateTime,
                 Status = x.Status,
                 Keyword = x.Keyword,
-                UpdateBy = x.UpdateBy,
-                UpdateTime = x.UpdateTime
+                CreatedBy = x.CreatedBy,
+                CreatedDate = x.CreatedDate,
+                UpdatedBy = x.UpdatedBy,
+                UpdatedDate = x.UpdatedDate
             });
 
             return await Task.FromResult(new QueryResult<AppItemModel>(result, option));

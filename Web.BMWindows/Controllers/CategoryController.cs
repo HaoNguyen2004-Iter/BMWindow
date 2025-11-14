@@ -50,24 +50,25 @@ namespace Web.BMWindows.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> ChangeStatus(int id)
-        {
-            try
-            {
-                if (id <= 0)
-                    return BadRequest(new { ok = false, message = "Dữ liệu không hợp lệ" });
-                var ok = await _categoryCommand.ChangeStatus(id);
-                return Ok(new { ok });
-            }
-            catch (System.Exception ex)
-            {
-                Response.StatusCode = 400;
-                return Json(new { ok = false, message = ex.Message });
-            }
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Deactive(int id)
+        //{
+        //    try
+        //    {
+        //        if (id <= 0)
+        //            return BadRequest(new { ok = false, message = "Dữ liệu không hợp lệ" });
+        //        var ok = await _categoryCommand.ChangeStatus(id);
+        //        return Ok(new { ok });
+        //    }
+        //    catch (System.Exception ex)
+        //    {
+        //        Response.StatusCode = 400;
+        //        return Json(new { ok = false, message = ex.Message });
+        //    }
+        //}
 
         // NEW: create
+
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CategoryModel model)
         {

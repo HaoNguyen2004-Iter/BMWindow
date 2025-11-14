@@ -1,8 +1,15 @@
 ﻿import { toast } from '/assets/js/app/common/toast.js';
 
-function onSaveCategoryClick(e) {
-    const btn = e.target.closest('#btnUpdateCategory') || e.target.closest('#btnSaveCategory');
+function onCreateCategoryClick(e) {
+    const btn = e.target.closest('#btnCreateCategory') || e.target.closest('#btnSaveCategory');
     if (!btn) return;
+
+    if (btn.id === 'btnSaveCategory') {
+        const formCheck = document.getElementById('categoryForm');
+        const fdCheck = formCheck ? new FormData(formCheck) : null;
+        const idCheck = fdCheck ? parseInt(fdCheck.get('Id') || '0', 10) : 0;
+        if (idCheck > 0) return; 
+    } 
 
     const form = document.getElementById('categoryForm');
     if (!form) {
@@ -12,11 +19,7 @@ function onSaveCategoryClick(e) {
     }
 
     const fd = new FormData(form);
-    const id = parseInt(fd.get('Id') || '0', 10);
-
-    if (!(id > 0)) return;
-
-    const url = '/Category/Update';
+    const url = '/Category/Create';
 
     btn.disabled = true;
     const originalText = btn.textContent;
@@ -36,14 +39,16 @@ function onSaveCategoryClick(e) {
                 return;
             }
 
-            toast?.success(json.message || 'Cập nhật thành công');
+            toast?.success(json.message || 'Tạo thành công');
 
+            // Reload list
             const host = document.getElementById('category-management');
             if (host) {
                 if (window.$) $('#category-management').removeData('loaded');
                 if (typeof window.loadCategory === 'function') window.loadCategory();
             }
 
+            // Close modal
             const modalEl = document.getElementById('global-modal');
             if (modalEl) bootstrap.Modal.getInstance(modalEl)?.hide();
         })
@@ -57,11 +62,4 @@ function onSaveCategoryClick(e) {
         });
 }
 
-document.addEventListener('click', onSaveCategoryClick);
-
-function initCategoryEdit() { }
-if (typeof window !== 'undefined') window.initCategoryEdit = initCategoryEdit;
-
-document.addEventListener('app:modal:loaded', () => {
-    initCategoryEdit();
-});
+document.addEventListener('click', onCreateCategoryClick);

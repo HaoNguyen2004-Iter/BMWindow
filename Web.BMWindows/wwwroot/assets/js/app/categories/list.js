@@ -1,4 +1,3 @@
-// Category list loader (moved from assets/js/script.js -> loadCategory)
 function loadCategory() {
     const $container = $('#category-management');
     if ($container.length === 0) {
@@ -31,7 +30,6 @@ function loadCategory() {
         });
 }
 
-// Expose for legacy usage
 window.loadCategory = loadCategory;
 
 export default loadCategory;

@@ -26,16 +26,13 @@ namespace Service.BMWindows.Executes.AppItem
                     Icon = x.Icon,
                     Size = x.Size,
                     Url = x.Url,
-                    Token = x.Token,
-                    Expired = x.Expired,
-                    AppExpire = x.AppExpire,
                     Prioritize = x.Prioritize,
-                    CreateBy = x.CreateBy,
-                    CreateTime = x.CreateTime,
                     Status = x.Status,
                     Keyword = x.Keyword,
-                    UpdateBy = x.UpdateBy,
-                    UpdateTime = x.UpdateTime
+                    CreatedBy = x.CreatedBy,
+                    CreatedDate = x.CreatedDate,
+                    UpdatedBy = x.UpdatedBy,
+                    UpdatedDate = x.UpdatedDate
                 })
                 .FirstOrDefaultAsync();
 
