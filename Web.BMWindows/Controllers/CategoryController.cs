@@ -17,12 +17,12 @@ namespace Web.BMWindows.Controllers
             _categoryOne = categoryOne;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> AppItemGroup([FromQuery] CategoryModel? filter, int page = 1, int pageSize = 5, string? part = null)
         {
             var data = await _categoryMany.GetAllCategory(page, pageSize, filter);
-            return PartialView("~/Views/AppItemCategory/Index.cshtml", data);
+            // Path matches new structure: Views/Admin/AppItemCategory/Index.cshtml
+            return PartialView("~/Views/Admin/AppItemCategory/Index.cshtml", data);
         }
 
         [HttpPost]
@@ -42,25 +42,6 @@ namespace Web.BMWindows.Controllers
                 return Json(new { ok = false, message = ex.Message });
             }
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Deactive(int id)
-        //{
-        //    try
-        //    {
-        //        if (id <= 0)
-        //            return BadRequest(new { ok = false, message = "Dữ liệu không hợp lệ" });
-        //        var ok = await _categoryCommand.ChangeStatus(id);
-        //        return Ok(new { ok });
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        Response.StatusCode = 400;
-        //        return Json(new { ok = false, message = ex.Message });
-        //    }
-        //}
-
-        // NEW: create
 
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CategoryModel model)
@@ -85,14 +66,17 @@ namespace Web.BMWindows.Controllers
         {
             try
             {
+                // Fixed path to include Admin segment per new folder structure.
+                const string formViewPath = "~/Views/Admin/AppItemCategory/Form.cshtml";
+
                 if (!id.HasValue || id.Value <= 0)
                 {
                     var empty = new CategoryModel { Id = 0, Status = 1 };
-                    return PartialView("~/Views/AppItemCategory/Form.cshtml", empty);
+                    return PartialView(formViewPath, empty);
                 }
 
                 var model = await _categoryOne.GetOneCategory(id.Value);
-                return PartialView("~/Views/AppItemCategory/Form.cshtml", model);
+                return PartialView(formViewPath, model);
             }
             catch (Exception ex)
             {

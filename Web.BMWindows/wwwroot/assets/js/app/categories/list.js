@@ -19,7 +19,6 @@ function loadCategory() {
             orderType: 'asc',
             onAfterLoad: () => {
                 if (!switchedToFragment) {
-                    // Sau lần đầu: chỉ thay thế vùng fragment
                     switchedToFragment = true;
                     categoryPagination.config.apiUrl = '/Category/AppItemGroup?part=fragment';
                     categoryPagination.config.replaceSelector = '#category-fragment';

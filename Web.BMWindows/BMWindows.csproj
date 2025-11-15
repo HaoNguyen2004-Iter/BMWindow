@@ -14,11 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\AppItemCategory\_AppItemView.cshtml" />
+    <Content Remove="Views\Admin\AppItemCategory\_AppItemView.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\AppItem\Form.cshtml" />
+    <None Include="Views\Admin\AppItem\Form.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,5 +32,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\js\client\" />
   </ItemGroup>
 </Project>
